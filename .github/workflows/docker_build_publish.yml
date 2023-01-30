@@ -43,6 +43,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            latest
             type=sha
             type=semver,pattern={{version}}
 
