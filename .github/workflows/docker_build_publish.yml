@@ -81,7 +81,7 @@ jobs:
           labels: |
             maintainer=${{ env.MAINTAINER }}
             commit_url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-            docker_pull_command=docker pull ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+            docker_pull_command=docker pull ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.short_sha }}
             org.opencontainers.image.description=${{ env.DESCRIPTION }}
           tags: |
             # Update the latest image when branch is main or with tags
