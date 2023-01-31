@@ -55,7 +55,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels:
             maintainer=${{ env.MAINTAINER }}
-            commit_url=${{ org.opencontainers.image.source }}/commit/${{ org.opencontainers.image.revision }}
+            commit_url=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.source'] }}
+            #${{ org.opencontainers.image.source }}/commit/${{ org.opencontainers.image.revision }}
           tags: |
             # Update the latest image when branch is main or with tags
             latest
