@@ -28,6 +28,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  MAINTAINER: CelestiaOrg
 
 jobs:
   docker-build:
@@ -52,9 +53,13 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          labels:
+            maintainer=${{ env.MAINTAINER }}
           tags: |
+            # Update the latest image when branch is main or with tags
             latest
-            type=sha
+            # output minimal (short sha)
+            type=raw,value={{sha}}
             # output 0.2.1
             type=semver,pattern={{version}}
 
