@@ -53,9 +53,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          labels:
+          labels: |
             maintainer=${{ env.MAINTAINER }}
-            commit_url=${{ github.repository }}
+            commit_url=https://${{ github.repository }}/commit/
           tags: |
             # Update the latest image when branch is main or with tags
             latest
