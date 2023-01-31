@@ -54,7 +54,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             latest
-            type={{sha}}
+            type=sha
             # output 0.2.1
             #type=semver,pattern={{version}}
 
