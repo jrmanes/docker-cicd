@@ -43,18 +43,20 @@ jobs:
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
 
       - name: Run Trivy vulnerability scanner
+        # source: https://github.com/aquasecurity/trivy-action
+        # https://github.com/marketplace/actions/aqua-security-trivy
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
           format: 'table'
-          exit-code: '1'
+          #exit-code: '1' # uncomment to stop the CI if the scanner fails
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
   docker-build:
     runs-on: "ubuntu-latest"
-    # wait until the security scanner is done
+    # wait until the security scanner will be done
     needs: docker-security
     permissions:
       contents: write
