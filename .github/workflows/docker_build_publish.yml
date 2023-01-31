@@ -29,6 +29,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   MAINTAINER: CelestiaOrg
+  GIT_COMMIT: $GITHUB_SHA
 
 jobs:
   docker-build:
@@ -55,7 +56,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
             maintainer=${{ env.MAINTAINER }}
-            commit_url=https://${{ github.repository }}/commit/$GITHUB_SHA
+            commit_url=https://${{ github.repository }}/commit/${{ env.GIT_COMMIT }}
           tags: |
             # Update the latest image when branch is main or with tags
             latest
