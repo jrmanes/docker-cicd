@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: "actions/checkout@v3"
 
-      - name: Build an image from Dockerfile
+      - name: Build Docker container
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
 
@@ -54,6 +54,8 @@ jobs:
 
   docker-build:
     runs-on: "ubuntu-latest"
+    # wait until the security scanner is done
+    needs: docker-security
     permissions:
       contents: write
       packages: write
