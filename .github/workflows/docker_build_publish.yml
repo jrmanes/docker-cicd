@@ -35,6 +35,9 @@ jobs:
   docker-security:
     runs-on: "ubuntu-latest"
     steps:
+      - name: Checkout
+        uses: "actions/checkout@v3"
+
       - name: Build an image from Dockerfile
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
