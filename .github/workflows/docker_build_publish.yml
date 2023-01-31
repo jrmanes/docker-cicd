@@ -29,7 +29,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   MAINTAINER: CelestiaOrg
-  DESCRIPTION: CelestiaOrg repository for ${{ github.repository }}
+  DESCRIPTION: ${{ env.MAINTAINER }} repository ${{ github.repository }}
 
 jobs:
   docker-build:
