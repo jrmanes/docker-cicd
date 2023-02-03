@@ -7,5 +7,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 ######## Start a new stage from scratch #######
 FROM alpine:latest
 COPY --from=builder /app/main .
+
 # Command to run the executable
 CMD ["./main"]
