@@ -28,6 +28,6 @@ on:
 
 jobs:
   docker-security-build:
-    uses: jrmanes/celestiaorg-github/.github/workflows/reusable_dockerfile_pipeline.yml@jose/docker-dommon-pipeline# yamllint disable-line rule:line-length
+    uses: jrmanes/celestiaorg-github/.github/workflows/reusable_dockerfile_pipeline.yml@1e6734c82888050fdfe932fb0b54ade27419d581 # yamllint disable-line rule:line-length
     with:
       dockerfile: Dockerfile
