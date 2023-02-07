@@ -41,16 +41,22 @@ jobs:
       - name: Checkout
         uses: "actions/checkout@v3"
 
-      - name: Build Docker container
-        run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest .
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          push: false
+          platforms: linux/amd64
+          # we're building the container before the scan, use the local tag for
+          # refer to it later
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:local
 
       - name: Run Trivy vulnerability scanner
         # source: https://github.com/aquasecurity/trivy-action
         # https://github.com/marketplace/actions/aqua-security-trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest'
+          # here we use the local tag that we've built before
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:local'
           format: 'table'
           #exit-code: '1' # uncomment to stop the CI if the scanner fails
           ignore-unfixed: true
