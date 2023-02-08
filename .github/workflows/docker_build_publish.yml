@@ -9,24 +9,7 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+-alpha.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+"
-
   pull_request:
-    branches:
-      - main
-
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      version:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: "Semver type of new version (major / minor / patch)"
-        # Input has to be provided for the workflow to run
-        required: true
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 env:
   REGISTRY: ghcr.io
@@ -80,7 +63,6 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
-            #username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add SHORT_SHA to ENV
@@ -91,29 +73,35 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # yamllint disable
           labels: |
             maintainer=${{ env.MAINTAINER }}
-            commit_url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-            docker_pull_command=docker pull ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.SHORT_SHA }}
+            commitUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            dockerPull=docker pull ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.SHORT_SHA }}
             org.opencontainers.image.description=${{ env.DESCRIPTION }}
           tags: |
-            # Update the latest image when branch is main or with tags
-            latest
             # output minimal (short sha)
             type=raw,value={{sha}}
             # output 0.2.1
-            type=semver,pattern={{version}}
+            type=semver,pattern=v{{version}}
             # pull request event
             type=ref,enable=true,prefix=pr-,suffix=,event=pr
+          # yamllint enable
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push
+      # We always build the image but we only push if we are on the `main`
+      # branch or a versioned `v*` branch
+      - name: Build and PushDocker Image
         uses: docker/build-push-action@v3
         with:
-          context: .
-          platforms: linux/amd64
-          push: true
+          platforms: linux/amd64,linux/arm64
+          # yamllint disable
+          # The following line, is execute as an if statement, only push when
+          # the branch is main or starts with v*
+          push: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') }}
+          # yamllint enable
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          file: Dockerfile
