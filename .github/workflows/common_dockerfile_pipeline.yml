@@ -12,22 +12,9 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+"
   pull_request:
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      version:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: "Semver type of new version (major / minor / patch)"
-        # Input has to be provided for the workflow to run
-        required: true
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 jobs:
   docker-security-build:
-    uses: jrmanes/celestiaorg-github/.github/workflows/reusable_dockerfile_pipeline.yml@1e6734c82888050fdfe932fb0b54ade27419d581 # yamllint disable-line rule:line-length
+    uses: jrmanes/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
     with:
       dockerfile: Dockerfile
