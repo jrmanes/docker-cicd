@@ -1,4 +1,4 @@
-name: CI and Release
+name: Yaml Lint
 
 # Trigger on push events to main (i.e. merges), pushing new semantic version # yamllint disable-line rule:line-length
 # tags and all PRs
