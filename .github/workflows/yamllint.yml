@@ -1,4 +1,4 @@
-name: CI and Release
+name: Yaml Lint
 
 # Trigger on push events to main (i.e. merges), pushing new semantic version # yamllint disable-line rule:line-length
 # tags and all PRs
@@ -14,8 +14,9 @@ on:
   pull_request:
 
 jobs:
-  docker-security-build:
-    #uses: jrmanes/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
-    uses: celestiaorg/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
+  yamllint:
+    uses: jrmanes/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
+    #uses: celestiaorg/.github/.github/workflows/yamllint.yml@main # yamllint disable-line rule:line-length
+    #uses: jrmanes/.github/.github/workflows/yamllint.yml@main # yamllint disable-line rule:line-length
     with:
       dockerfile: Dockerfile
