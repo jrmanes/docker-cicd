@@ -3,7 +3,7 @@ LABEL maintainer="Jose Ramon Mañes - github.com/jrmanes/docker-cicd"
 ADD . /app
 WORKDIR /app
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
-###### Start a new stage from scratch #######
+#### Start a new stage from scratch #######
 FROM alpine:latest
 RUN echo "==========================================="
 COPY --from=builder /app/main .
