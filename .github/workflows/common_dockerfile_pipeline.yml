@@ -25,4 +25,4 @@ jobs:
       #uses: celestiaorg/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
     with:
       dockerfile: Dockerfile.build
-      packageName: cicd-testing
+      packageName: cicd-testing-2
