@@ -19,7 +19,8 @@ jobs:
       #uses: celestiaorg/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
     with:
       dockerfile: Dockerfile
-      platforms: ["linux/amd64","linux/arm64"]
+      platforms: linux/amd64,linux/arm64
+
 
   dockerfile-build:
     uses: jrmanes/.github/.github/workflows/reusable_dockerfile_pipeline.yml@main # yamllint disable-line rule:line-length
