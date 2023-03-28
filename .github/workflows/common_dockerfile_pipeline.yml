@@ -26,3 +26,4 @@ jobs:
     with:
       dockerfile: Dockerfile.build
       packageName: docker-test-arch
+
